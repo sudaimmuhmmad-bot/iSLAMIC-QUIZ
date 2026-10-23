@@ -1,0 +1,17 @@
+{
+  "name": "sudaim-quiz-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Quiz website with registration, login, admin marking and published results",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "better-sqlite3": "^11.5.0",
+    "express": "^4.21.2",
+    "express-session": "^1.18.1",
+    "dotenv": "^16.4.7"
+  }
+}
