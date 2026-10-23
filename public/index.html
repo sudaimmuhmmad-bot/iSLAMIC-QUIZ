@@ -16,7 +16,17 @@
 <div class="panel"><h2>Leaderboard</h2><div id="leaderboard"></div></div>
 </section>
 <section id="quizPanel" class="panel" hidden><button onclick="backHome()">← Dashboard</button><h2 id="quizTitle"></h2><form id="quizForm"></form></section>
-<section id="admin" hidden>
+<section id="welcomeGift" class="panel" hidden>
+  <h2 id="welcomeTitle">Welcome!</h2>
+  <p id="welcomeText">Welcome to Islamic Quiz!</p>
+  <div id="certificate" hidden>
+    <h2>🏆 Certificate of Achievement 🏆</h2>
+    <p>Congratulations, <b id="certName"></b>!</p>
+    <p>Your Rank: <b id="certRank"></b></p>
+    <p>Your Marks: <b id="certMarks"></b></p>
+    <button onclick="shareCertificate()">Share Certificate</button>
+  </div>
+</section><section id="admin" hidden>
 <div class="panel"><div class="row"><h2>Admin Panel</h2><button onclick="logout()">Logout</button></div>
 <h3>Create quiz</h3><form id="createQuiz"><label>Title<input name="title" required></label><label>Description<input name="description"></label><button class="primary">Create quiz</button></form><p id="adminMsg" class="msg"></p>
 <h3>Add question</h3><form id="addQuestion"><label>Quiz<select name="quiz_id" id="quizSelect" required></select></label><label>Type<select name="type"><option value="mcq">MCQ (auto-check)</option><option value="written">Written (manual check)</option></select></label><label>Question<textarea name="prompt" required></textarea></label><label>Options (MCQ only, comma-separated)<input name="options"></label><label>Correct option (MCQ only, exact text)<input name="correct_answer"></label><label>Points<input name="points" type="number" min="1" max="100" value="1"></label><button class="primary">Add question</button></form>
