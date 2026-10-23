@@ -22,3 +22,20 @@ async function markSubmission(id){const all=await api('/api/admin/submissions');
 async function publishResult(id){if(!confirm('Publish this result to the student?'))return;try{const d=await api('/api/admin/submissions/'+id+'/publish',{method:'POST',body:'{}'});alert(d.message);await loadSubmissions()}catch(e){alert(e.message)}}
 function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 boot();
+function shareCertificate() {
+  const name = document.getElementById('certName').textContent;
+  const rank = document.getElementById('certRank').textContent;
+  const marks = document.getElementById('certMarks').textContent;
+  const text = `🏆 Islamic Quiz Certificate 🏆
+Congratulations ${name}!
+Rank: ${rank}
+Marks: ${marks}
+`;
+
+  if (navigator.share) {
+    navigator.share({ title: 'Islamic Quiz Certificate', text });
+  } else {
+    navigator.clipboard.writeText(text)
+      .then(() => alert('Certificate text copied!'));
+  }
+}
