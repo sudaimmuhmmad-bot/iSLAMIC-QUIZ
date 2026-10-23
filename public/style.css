@@ -1,0 +1,21 @@
+
+*{box-sizing:border-box}
+body{margin:0;background:#f3f5f9;color:#172033;font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+header{background:#172554;color:white;padding:18px max(18px,calc((100% - 900px)/2));display:flex;justify-content:space-between;align-items:center;gap:12px}
+h1{font-size:1.35rem;margin:0}
+main{max-width:900px;margin:24px auto;padding:0 14px}
+.panel{background:white;border:1px solid #e1e6ef;border-radius:16px;padding:20px;margin:16px 0;box-shadow:0 4px 18px #1725540a}
+h2{margin-top:0}
+label{display:block;font-weight:600;margin:12px 0}
+input,select,textarea{display:block;width:100%;padding:11px;margin-top:5px;border:1px solid #cbd5e1;border-radius:8px;font:inherit}
+button{border:1px solid #cbd5e1;background:white;padding:9px 13px;border-radius:8px;font:inherit;cursor:pointer}
+button.primary{background:#1d4ed8;color:white;border-color:#1d4ed8;margin-top:10px}
+.tabs,.row{display:flex;gap:10px;align-items:center;justify-content:space-between}
+.tabs{justify-content:flex-start;margin:12px 0}
+.msg{color:#b45309;white-space:pre-wrap}
+.item{border:1px solid #e2e8f0;border-radius:10px;padding:14px;margin:10px 0}
+.muted{color:#64748b;font-size:.9rem}
+.options label{font-weight:400}
+.good{color:#166534}
+[hidden]{display:none!important}
+@media(max-width:600px){.panel{padding:15px}header{padding:16px}}
