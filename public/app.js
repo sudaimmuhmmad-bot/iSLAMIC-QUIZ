@@ -3,10 +3,37 @@ const $=id=>document.getElementById(id);
 async function api(url,opts={}){const r=await fetch(url,{headers:{'Content-Type':'application/json'},...opts});const d=await r.json().catch(()=>({}));if(!r.ok)throw Error(d.error||'Request failed');return d}
 function showAuth(mode){authMode=mode;$('nameField').hidden=mode!=='register';$('authSubmit').textContent=mode==='register'?'Create account':'Login';$('authMsg').textContent='';}
 $('authForm').onsubmit=async e=>{e.preventDefault();const f=new FormData(e.target);try{const d=await api('/api/'+(authMode==='register'?'register':'login'),{method:'POST',body:JSON.stringify(Object.fromEntries(f))});currentUser=d.user;await loadHome()}catch(err){$('authMsg').textContent=err.message}};
-async function boot(){try{const d=await api('/api/me');if(d.user){currentUser=d.user;await loadHome()}}catch{}}
-async function loadHome(){ $('auth').hidden=true;$('quizPanel').hidden=true;$('who').textContent=currentUser.name+' · '+currentUser.role;
- if(currentUser.role==='admin'){ $('dashboard').hidden=true;$('admin').hidden=false;await loadAdmin();return}
- $('admin').hidden=true;$('dashboard').hidden=false;await Promise.all([loadQuizzes(),loadResults(),loadLeaderboard()]);}
+async function boot(){try{const d=await api('/api/me');if(d.user){currentUser=d.user;await l
+ 
+async function loadHome(){
+  $('auth').hidden = true;
+  $('quizPanel').hidden = true;
+  $('welcomeGift').hidden = false;
+  $('certificate').hidden = true;
+  $('who').textContent = currentUser.name + ' · ' + currentUser.role;
+
+  if(currentUser.role === 'admin'){
+    $('welcomeGift').hidden = true;
+    $('dashboard').hidden = true;
+    $('admin').hidden = false;
+    await loadAdmin();
+    return;
+  }
+
+  $('admin').hidden = true;
+  $('dashboard').hidden = false;
+  $('welcomeTitle').textContent = 'Welcome, ' + currentUser.name + '! 🎉';
+  $('welcomeText').textContent = 'Welcome to Islamic Quiz. Keep learning and do your best!';
+
+  await Promise.all([
+    loadQuizzes(),
+    loadResults(),
+    loadLeaderboard()
+  ]);
+
+  await loadCertificate();
+}
+                                                                  
 async function logout(){await api('/api/logout',{method:'POST',body:'{}'});location.reload()}
 async function loadQuizzes(){const d=await api('/api/quizzes');$('quizzes').innerHTML=d.quizzes.length?d.quizzes.map(q=>`<div class="item"><b>${esc(q.title)}</b><p>${esc(q.description||'')}</p><button onclick="startQuiz(${q.id})">Start quiz</button></div>`).join(''):'No quizzes available yet.'}
 async function startQuiz(id){try{currentQuiz=await api('/api/quizzes/'+id);$('dashboard').hidden=true;$('quizPanel').hidden=false;$('quizTitle').textContent=currentQuiz.quiz.title;$('quizForm').innerHTML=currentQuiz.questions.map((q,i)=>`<div class="item"><b>${i+1}. ${esc(q.prompt)} (${q.points} point${q.points===1?'':'s'})</b>${q.type==='mcq'?`<div class="options">${q.options.map(o=>`<label><input type="radio" name="q${q.id}" value="${esc(o)}"> ${esc(o)}</label>`).join('')}</div>`:`<label>Your answer<textarea name="q${q.id}" rows="3"></textarea></label>`}</div>`).join('')+'<button class="primary">Submit quiz</button>'; $('quizForm').onsubmit=submitQuiz}catch(e){$('globalMsg').textContent=e.message}}
