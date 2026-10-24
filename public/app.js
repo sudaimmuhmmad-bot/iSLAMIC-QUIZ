@@ -22,6 +22,44 @@ async function markSubmission(id){const all=await api('/api/admin/submissions');
 async function publishResult(id){if(!confirm('Publish this result to the student?'))return;try{const d=await api('/api/admin/submissions/'+id+'/publish',{method:'POST',body:'{}'});alert(d.message);await loadSubmissions()}catch(e){alert(e.message)}}
 function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 boot();
+
+async function loadCertificate(){
+  try {
+    const resultsData = await api('/api/my-results');
+    const boardData = await api('/api/leaderboard');
+
+    const result = resultsData.results.find(r => r.published);
+
+    if(!result){
+      $('certificate').hidden = true;
+      $('welcomeText').textContent =
+        'Welcome to Islamic Quiz! Your certificate will appear after your result is published.';
+      return;
+    }
+
+    const entryIndex = boardData.leaderboard.findIndex(r =>
+      r.name === currentUser.name &&
+      r.title === result.title &&
+      Number(r.score) === Number(result.total_score)
+    );
+
+    if(entryIndex === -1){
+      $('certificate').hidden = true;
+      return;
+    }
+
+    $('certName').textContent = currentUser.name;
+    $('certRank').textContent = '#' + (entryIndex + 1);
+    $('certMarks').textContent = result.total_score;
+
+    $('certificate').hidden = false;
+    $('welcomeText').textContent = 'Congratulations! Your result is published.';
+  } catch(error) {
+    $('certificate').hidden = true;
+    console.log('Certificate:', error.message);
+  }
+}
+
 function shareCertificate() {
   const name = document.getElementById('certName').textContent;
   const rank = document.getElementById('certRank').textContent;
