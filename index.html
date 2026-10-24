@@ -11,6 +11,17 @@
 <label>Password<input name="password" type="password" minlength="10" required autocomplete="current-password"></label>
 <button class="primary" id="authSubmit">Login</button></form><p id="authMsg" class="msg"></p></section>
 <section id="dashboard" hidden>
+<section id="welcomeGift" class="panel" hidden>
+  <h2 id="welcomeTitle">Welcome!</h2>
+  <p id="welcomeText">Welcome to Islamic Quiz!</p>
+  <div id="certificate" hidden>
+    <h2>🏆 Certificate of Achievement 🏆</h2>
+    <p>Congratulations, <b id="certName"></b>!</p>
+    <p>Your Rank: <b id="certRank"></b></p>
+    <p>Your Marks: <b id="certMarks"></b></p>
+    <button onclick="shareCertificate()">Share Certificate</button>
+  </div>
+</section>
 <div class="panel"><div class="row"><h2>Student Dashboard</h2><button onclick="logout()">Logout</button></div><p>Choose an available quiz. Results remain private until an admin publishes them.</p><div id="quizzes"></div></div>
 <div class="panel"><h2>My Results</h2><div id="myResults"></div></div>
 <div class="panel"><h2>Leaderboard</h2><div id="leaderboard"></div></div>
