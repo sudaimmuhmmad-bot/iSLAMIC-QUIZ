@@ -1,36 +1,103 @@
+
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Islamic Quiz</title><link rel="stylesheet" href="style.css"></head>
-<body><header><h1>Islamic Quiz</h1><span id="who"></span></header>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Islamic Quiz</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+<h1>Islamic Quiz</h1>
+<span id="who"></span>
+</header>
 <main>
 <section id="auth" class="panel">
-<h2>Welcome to Islamic Quiz</h2><p>Create a student account or log in.</p>
-<div class="tabs"><button onclick="showAuth('login')">Login</button><button onclick="showAuth('register')">Register</button></div>
-<form id="authForm"><div id="nameField" hidden><label>Name<input name="name" autocomplete="name"></label></div>
+<h2>Welcome to Islamic Quiz</h2>
+<p>Create a student account or log in.</p>
+<div class="tabs">
+<button onclick="showAuth('login')">Login</button>
+<button onclick="showAuth('register')">Register</button>
+</div>
+<form id="authForm">
+<div id="nameField" hidden>
+<label>Name<input name="name" autocomplete="name"></label>
+</div>
 <label>Email<input name="email" type="email" required autocomplete="email"></label>
 <label>Password<input name="password" type="password" minlength="10" required autocomplete="current-password"></label>
-<button class="primary" id="authSubmit">Login</button></form><p id="authMsg" class="msg"></p></section>
-<section id="dashboard" hidden>
-<div class="panel"><div class="row"><h2>Student Dashboard</h2><button onclick="logout()">Logout</button></div><p>Choose an available quiz. Results remain private until an admin publishes them.</p><div id="quizzes"></div></div>
-<div class="panel"><h2>My Results</h2><div id="myResults"></div></div>
-<div class="panel"><h2>Leaderboard</h2><div id="leaderboard"></div></div>
+<button class="primary" id="authSubmit">Login</button>
+</form>
+<p id="authMsg" class="msg"></p>
 </section>
-<section id="quizPanel" class="panel" hidden><button onclick="backHome()">← Dashboard</button><h2 id="quizTitle"></h2><form id="quizForm"></form></section>
+
 <section id="welcomeGift" class="panel" hidden>
-  <h2 id="welcomeTitle">Welcome!</h2>
-  <p id="welcomeText">Welcome to Islamic Quiz!</p>
-  <div id="certificate" hidden>
-    <h2>🏆 Certificate of Achievement 🏆</h2>
-    <p>Congratulations, <b id="certName"></b>!</p>
-    <p>Your Rank: <b id="certRank"></b></p>
-    <p>Your Marks: <b id="certMarks"></b></p>
-    <button onclick="shareCertificate()">Share Certificate</button>
-  </div>
-</section><section id="admin" hidden>
-<div class="panel"><div class="row"><h2>Admin Panel</h2><button onclick="logout()">Logout</button></div>
-<h3>Create quiz</h3><form id="createQuiz"><label>Title<input name="title" required></label><label>Description<input name="description"></label><button class="primary">Create quiz</button></form><p id="adminMsg" class="msg"></p>
-<h3>Add question</h3><form id="addQuestion"><label>Quiz<select name="quiz_id" id="quizSelect" required></select></label><label>Type<select name="type"><option value="mcq">MCQ (auto-check)</option><option value="written">Written (manual check)</option></select></label><label>Question<textarea name="prompt" required></textarea></label><label>Options (MCQ only, comma-separated)<input name="options"></label><label>Correct option (MCQ only, exact text)<input name="correct_answer"></label><label>Points<input name="points" type="number" min="1" max="100" value="1"></label><button class="primary">Add question</button></form>
-<h3>Submissions to check</h3><div id="submissions"></div></div>
+<h2 id="welcomeTitle">Welcome!</h2>
+<p id="welcomeText">Welcome to Islamic Quiz!</p>
+<div id="certificate" hidden>
+<h2>🏆 Certificate of Achievement 🏆</h2>
+<p>Congratulations, <b id="certName"></b>!</p>
+<p>Your Rank: <b id="certRank"></b></p>
+<p>Your Marks: <b id="certMarks"></b></p>
+<button onclick="shareCertificate()">Share Certificate</button>
+</div>
+</section>
+
+<section id="dashboard" hidden>
+<div class="panel">
+<div class="row">
+<h2>Student Dashboard</h2>
+<button onclick="logout()">Logout</button>
+</div>
+<p>Choose an available quiz. Results remain private until an admin publishes them.</p>
+<div id="quizzes"></div>
+</div>
+<div class="panel">
+<h2>My Results</h2>
+<div id="myResults"></div>
+</div>
+<div class="panel">
+<h2>Leaderboard</h2>
+<div id="leaderboard"></div>
+</div>
+</section>
+
+<section id="quizPanel" class="panel" hidden>
+<button onclick="backHome()">← Dashboard</button>
+<h2 id="quizTitle"></h2>
+<form id="quizForm"></form>
+</section>
+
+<section id="admin" hidden>
+<div class="panel">
+<div class="row">
+<h2>Admin Panel</h2>
+<button onclick="logout()">Logout</button>
+</div>
+<h3>Create quiz</h3>
+<form id="createQuiz">
+<label>Title<input name="title" required></label>
+<label>Description<input name="description"></label>
+<button class="primary">Create quiz</button>
+</form>
+<p id="adminMsg" class="msg"></p>
+<h3>Add question</h3>
+<form id="addQuestion">
+<label>Quiz<select name="quiz_id" id="quizSelect" required></select></label>
+<label>Type<select name="type"><option value="mcq">MCQ (auto-check)</option><option value="written">Written (manual check)</option></select></label>
+<label>Question<textarea name="prompt" required></textarea></label>
+<label>Options (MCQ only, comma-separated)<input name="options"></label>
+<label>Correct option (MCQ only, exact text)<input name="correct_answer"></label>
+<label>Points<input name="points" type="number" min="1" max="100" value="1"></label>
+<button class="primary">Add question</button>
+</form>
+<h3>Submissions to check</h3>
+<div id="submissions"></div>
+</div>
 </section>
 <p id="globalMsg" class="msg"></p>
-</main><script src="app.js"></script></body></html>
+</main>
+<script src="app.js"></script>
+</body>
+</html>
+
