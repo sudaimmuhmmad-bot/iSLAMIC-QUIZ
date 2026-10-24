@@ -3,7 +3,19 @@ const $=id=>document.getElementById(id);
 async function api(url,opts={}){const r=await fetch(url,{headers:{'Content-Type':'application/json'},...opts});const d=await r.json().catch(()=>({}));if(!r.ok)throw Error(d.error||'Request failed');return d}
 function showAuth(mode){authMode=mode;$('nameField').hidden=mode!=='register';$('authSubmit').textContent=mode==='register'?'Create account':'Login';$('authMsg').textContent='';}
 $('authForm').onsubmit=async e=>{e.preventDefault();const f=new FormData(e.target);try{const d=await api('/api/'+(authMode==='register'?'register':'login'),{method:'POST',body:JSON.stringify(Object.fromEntries(f))});currentUser=d.user;await loadHome()}catch(err){$('authMsg').textContent=err.message}};
-async function boot(){try{const d=await api('/api/me');if(d.user){currentUser=d.user;await l
+async function boot(){
+  try {
+    const d = await api('/api/me');
+    if(d.user){
+      currentUser = d.user;
+      await loadHome();
+    } else {
+      showAuth('login');
+    }
+  } catch(e) {
+    showAuth('login');
+  }
+}
  
 async function loadHome(){
   $('auth').hidden = true;
